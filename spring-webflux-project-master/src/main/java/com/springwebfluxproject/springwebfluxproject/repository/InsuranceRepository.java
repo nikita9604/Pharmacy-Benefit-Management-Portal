@@ -10,4 +10,5 @@ import reactor.core.publisher.Mono;
 public interface InsuranceRepository extends ReactiveCrudRepository<Insurance,Integer> {
     @Query("select count(*) > 0 from Insurance where inid=:inid")
     Mono<Boolean> hasInid(int inid);
+
 }

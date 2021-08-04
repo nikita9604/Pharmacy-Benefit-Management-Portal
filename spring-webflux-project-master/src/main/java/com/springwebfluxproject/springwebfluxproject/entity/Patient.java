@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
 
 
@@ -16,6 +17,6 @@ public class Patient {
     private String name;
     private String city;
     private int pass;
-
     private int inid;
+
 }

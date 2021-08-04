@@ -67,4 +67,15 @@ public class PBMController {
     public Mono<String> deletePharmacy(@PathVariable int id){
         return service.deletePharmacy(id);
     }
+
+    @GetMapping("/getPh/{dname}/{city}")
+    public Flux<Pharmacy> getNearbyPharmacyList(@PathVariable("dname") String dname,@PathVariable("city") String city)
+    {
+        return service.getNearbyPharmacies(dname,city);
+    }
+    @GetMapping("/covered/{dname}/{plan}")
+    public Mono<String> isDrugCovered(@PathVariable("dname") String dname,@PathVariable("plan") String plan)
+    {
+        return service.IsDrugCoveredByInsurance(dname,plan);
+    }
 }

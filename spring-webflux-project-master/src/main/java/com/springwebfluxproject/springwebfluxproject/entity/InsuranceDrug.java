@@ -5,16 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
-import java.util.List;
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pharmacy {
+public class InsuranceDrug {
     @Id
-    private int phid;
-    private String phname;
-    private String city;
-
+    private int idid;
+    private int inid;
+    private int did;
+    private int reducedprice;
 }

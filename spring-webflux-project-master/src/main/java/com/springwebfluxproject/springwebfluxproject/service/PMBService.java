@@ -53,6 +53,16 @@ public class PMBService {
         return drugRepository.findById(did).flatMap(drug->drugRepository.delete(drug).then(Mono.just("Removed Drug with ID - " + did))).defaultIfEmpty("Drug Not found");
 
     }
+    public Mono<String> IsDrugCoveredByInsurance(String dname,String plan){
+        return drugRepository.checkIfDrugCoveredByInsurance(dname,plan).flatMap(check->{
+            if (check == true)
+                return Mono.just("Drug Is Covered By Your Insurance");
+            else
+                return Mono.just("Drug is not Covered");
+
+        });
+
+    }
 
     // Insurance Repository
     public Flux<Insurance> addInsurances(List<Insurance> insurances){ return insuranceRepository.saveAll(insurances); }
@@ -97,5 +107,9 @@ public class PMBService {
     public Flux<Pharmacy> getPharmacyList(){ return pharmacyRepository.findAll(); }
     public Mono<String> deletePharmacy(int phid){
         return pharmacyRepository.findById(phid).flatMap(pharmacy->pharmacyRepository.delete(pharmacy).then(Mono.just("Removed Pharmacy with ID - " + phid))).defaultIfEmpty("Pharmacy Not found");
+    }
+    public Flux<Pharmacy> getNearbyPharmacies(String dname,String city)
+    {
+        return pharmacyRepository.getAllPharmacyWithDrugNameInACity(dname,city);
     }
 }
