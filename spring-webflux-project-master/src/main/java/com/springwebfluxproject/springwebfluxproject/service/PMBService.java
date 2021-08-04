@@ -53,6 +53,15 @@ public class PMBService {
         return drugRepository.findById(did).flatMap(drug->drugRepository.delete(drug).then(Mono.just("Removed Drug with ID - " + did))).defaultIfEmpty("Drug Not found");
 
     }
+    //Check if the drug is present
+    public Mono<String> getDrugList(String dname){
+        return drugRepository.hasDrug(dname).flatMap(check->{
+            if (check == true)
+                return Mono.just("Drug Available");
+            else
+                return Mono.just("Drug Unavailable");
+
+        });
 
     // Insurance Repository
     public Flux<Insurance> addInsurances(List<Insurance> insurances){ return insuranceRepository.saveAll(insurances); }
