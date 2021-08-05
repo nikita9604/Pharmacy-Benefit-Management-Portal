@@ -11,6 +11,6 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class Doctor {
     @Id
-    private int docid;
+    private Integer docid;
     private String docname;
 }

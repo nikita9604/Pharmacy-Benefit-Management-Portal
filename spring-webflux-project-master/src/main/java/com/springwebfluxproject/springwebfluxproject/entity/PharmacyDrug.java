@@ -12,7 +12,7 @@ import org.springframework.data.annotation.Id;
 public class PharmacyDrug {
 
     @Id
-    private int pdid;
+    private Integer pdid;
     private int phid;
     private int did;
 }

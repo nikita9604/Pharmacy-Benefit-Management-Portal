@@ -13,10 +13,10 @@ import org.springframework.data.relational.core.mapping.Column;
 @NoArgsConstructor
 public class Patient {
     @Id
-    private int pid;
+    private Integer pid;
     private String name;
     private String city;
-    private int pass;
+//    private int pass;
     private int inid;
 
 }

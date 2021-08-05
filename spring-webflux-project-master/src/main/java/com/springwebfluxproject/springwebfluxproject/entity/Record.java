@@ -1,5 +1,6 @@
 package com.springwebfluxproject.springwebfluxproject.entity;
 
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.data.relational.core.mapping.Embedded;
 @NoArgsConstructor
 public class Record {
     @Id
-    private int rid;
+    private Integer rid;
     private int pid;
     private int did;
     private String docname;

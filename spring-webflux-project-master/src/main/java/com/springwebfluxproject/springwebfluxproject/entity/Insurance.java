@@ -11,6 +11,6 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class Insurance {
     @Id
-    private int inid;
+    private Integer inid;
     private String plan;
 }

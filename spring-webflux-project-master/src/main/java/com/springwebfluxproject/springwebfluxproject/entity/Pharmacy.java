@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Pharmacy {
     @Id
-    private int phid;
+    private Integer phid;
     private String phname;
     private String city;
 

@@ -1,6 +1,7 @@
 package com.springwebfluxproject.springwebfluxproject.controller;
 
 
+import com.springwebfluxproject.springwebfluxproject.dto.CreateUserDTO;
 import com.springwebfluxproject.springwebfluxproject.entity.*;
 import com.springwebfluxproject.springwebfluxproject.security.User;
 import com.springwebfluxproject.springwebfluxproject.security.UserRepository;
@@ -25,7 +26,15 @@ public class PBMController {
 
     // Patient Details
     @PostMapping("/addP")
-    public Mono<Patient> addPatient(@RequestBody Patient patient){ return service.savePatient(patient); }
+    public Mono<Patient> addPatient(@RequestBody CreateUserDTO client){
+
+        PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(client.getPassword());
+        User userWithEncodedPassword=new User(null,client.getName(),encodedPassword,"ROLE_USER");
+
+        Patient patient=new Patient(null, client.getName(), client.getCity(), client.getInid());
+        return  users.save(userWithEncodedPassword).zipWith(service.savePatient(patient),(newUser,newPatient)->newPatient);
+    }
 
     // Record Details
     @GetMapping("/updateRS")

@@ -40,4 +40,11 @@ CREATE TABLE MyUser(
     role VARCHAR,
     PRIMARY KEY (uid)
 );
+CREATE TABLE patient (
+    pid   SERIAL,
+    name VARCHAR(128) NOT NULL,
+    city VARCHAR(128) NOT NULL,
+    inid INT,
+    PRIMARY KEY (pid)
+);
 
