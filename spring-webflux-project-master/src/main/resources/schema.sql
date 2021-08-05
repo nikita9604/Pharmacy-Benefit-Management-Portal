@@ -33,5 +33,11 @@ CREATE TABLE InsuranceDrug(
     reducedprice INT NOT NULL,
     PRIMARY KEY (idid)
 )
-
+CREATE TABLE MyUser(
+    uid   SERIAL,
+    username VARCHAR,
+    password VARCHAR,
+    role VARCHAR,
+    PRIMARY KEY (uid)
+);
 

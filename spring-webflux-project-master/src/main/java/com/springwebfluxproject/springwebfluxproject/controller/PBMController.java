@@ -2,8 +2,12 @@ package com.springwebfluxproject.springwebfluxproject.controller;
 
 
 import com.springwebfluxproject.springwebfluxproject.entity.*;
+import com.springwebfluxproject.springwebfluxproject.security.User;
+import com.springwebfluxproject.springwebfluxproject.security.UserRepository;
 import com.springwebfluxproject.springwebfluxproject.service.PMBService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,6 +19,9 @@ public class PBMController {
 
     @Autowired
     private PMBService service;
+
+    @Autowired
+    private UserRepository users;
 
     // Patient Details
     @PostMapping("/addP")
@@ -78,4 +85,13 @@ public class PBMController {
     {
         return service.IsDrugCoveredByInsurance(dname,plan);
     }
-}
+
+    //User Repository
+    @PostMapping("/addUser")
+    public Mono<User> addPharmacies(@RequestBody User user){
+        PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+        User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());
+        return users.save(userWithEncodedPassword);
+    };
+    }
