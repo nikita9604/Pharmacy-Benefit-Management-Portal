@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface InsuranceRepository extends JpaRepository<Insurance,Integer> {
-    @Query("select new java.lang.Boolean(count(*) > 0) from Insurance where inid = ?")
+    // Q1 - Match of Insurance ID (User Sign Up Page)
+    @Query("select new java.lang.Boolean(count(*) > 0) from Insurance where inid = ?1")
     Boolean hasInid(int inid);
 }

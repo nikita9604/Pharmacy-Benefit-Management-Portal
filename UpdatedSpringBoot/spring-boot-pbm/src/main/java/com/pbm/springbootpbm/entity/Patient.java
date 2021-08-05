@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -15,11 +12,20 @@ import javax.persistence.Id;
 @Entity
 public class Patient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int pid;
     private String name;
     private String city;
     private int pass;
     @Column(nullable = true)
     private int inid;
+
+    public Patient(String name, String city, int pass, int inid)
+    {
+        super();
+        this.name = name;
+        this.city = city;
+        this.pass = pass;
+        this.inid = inid;
+    }
 }

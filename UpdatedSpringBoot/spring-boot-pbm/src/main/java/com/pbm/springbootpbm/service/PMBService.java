@@ -22,12 +22,29 @@ public class PMBService {
     private PatientRepository patientRepository;
     @Autowired
     private RecordRepository recordRepository;
+    @Autowired
+    private PatientEntryRepository patientEntryRepository;
 
     // Patient Repository
-    // Add details in Patient sign up page - button
+    // Add details from Patient sign up page to database - button
+    public String insertPatient(String name, String city, int pass, int inid){
+        Patient patient1 = new Patient(name,city,pass,inid);
+        patientEntryRepository.insertPatient(patient1);
+        return "Signed Up Successfully";
+    }
     public Patient savePatient(Patient patient){ return patientRepository.save(patient); }
+    public List<Patient> getPatientList(){ return patientRepository.findAll(); }
+    // Check Name and Password pair exists for Login Page - button
+    public String getLoginStatus(String name, int pass){
+        Boolean check = patientRepository.hasLogin(name,pass);
+        if (check)
+            return "Login Successfully";
+        else
+            return "Login Failed";
+    }
 
     // Record Repository
+    public List<Record> addRecords(List<Record> records){ return recordRepository.saveAll(records); }
     // Update status from pending to confirmed
     public String updateRecordStatus(int id){
         Record existingProduct=recordRepository.findById(id).orElse(null);
@@ -35,6 +52,7 @@ public class PMBService {
         recordRepository.save(existingProduct);
         return "confirmed";
     }
+    public List<Record> getPendingRecord(){ return recordRepository.getPendingRecord(); }
 
     // Drug Repository
     public List<Drug> addDrugs(List<Drug> drugs){ return drugRepository.saveAll(drugs); }
@@ -42,6 +60,14 @@ public class PMBService {
     public String deleteDrug(int did){
         drugRepository.deleteById(did);
         return "Removed Drug with ID - " + did;
+    }
+    // Check if Drug name Exists or not - Button
+    public String getDrugnameStatus(String dname){
+        Boolean check = drugRepository.hasDrugname(dname);
+        if (check)
+            return "Drug found";
+        else
+            return "Drug not found";
     }
 
     // Insurance Repository
@@ -54,23 +80,23 @@ public class PMBService {
     // Check if Insurance Id Exists or not - Button (Patient sign up page)
     public String getInsuranceStatus(int inid){
         Boolean check = insuranceRepository.hasInid(inid);
-        if (check == true)
-            return "Match Found";
+        if (check)
+            return "Match found";
         else
-            return "Match Failed";
+            return "Match not found";
     }
 
     // Doctor Repository
     public List<Doctor> addDoctors(List<Doctor> doctors){ return doctorRepository.saveAll(doctors); }
     public List<Doctor> getDoctorList(){ return doctorRepository.findAll(); }
     public String deleteDoctor(int docid){
-        drugRepository.deleteById(docid);
+        doctorRepository.deleteById(docid);
         return "Removed Drug with ID - " + docid;
     }
     // Check if Doctor name Exists or not - Button (Add drug items by patient) - Prescription Check
     public String getDoctorPrescription(String docname){
         Boolean check = doctorRepository.hasDocname(docname);
-        if (check == true)
+        if (check)
             return "Prescription Request Accepted";
         else
             return "Prescription Request Failed";
@@ -80,7 +106,7 @@ public class PMBService {
     public List<Pharmacy> addPharmacies(List<Pharmacy> pharmacies){ return pharmacyRepository.saveAll(pharmacies); }
     public List<Pharmacy> getPharmacyList(){ return pharmacyRepository.findAll(); }
     public String deletePharmacy(int phid){
-        drugRepository.deleteById(phid);
+        pharmacyRepository.deleteById(phid);
         return "Removed Drug with ID - " + phid;
     }
 }

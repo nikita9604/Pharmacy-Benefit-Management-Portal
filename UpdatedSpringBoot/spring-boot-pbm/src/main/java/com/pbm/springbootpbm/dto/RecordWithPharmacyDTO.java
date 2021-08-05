@@ -2,14 +2,10 @@ package com.pbm.springbootpbm.dto;
 
 import com.pbm.springbootpbm.entity.Pharmacy;
 import com.pbm.springbootpbm.entity.Record;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class RecordPharmacyResponse {
+@Value
+public class RecordWithPharmacyDTO {
     private Record record;
     private Pharmacy pharmacy;
 }

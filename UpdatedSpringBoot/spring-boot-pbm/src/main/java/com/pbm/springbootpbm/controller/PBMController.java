@@ -1,7 +1,11 @@
 package com.pbm.springbootpbm.controller;
 
+import com.pbm.springbootpbm.dto.PharmacyInfo;
+import com.pbm.springbootpbm.dto.RecordWithPharmacyDTO;
 import com.pbm.springbootpbm.entity.*;
 import com.pbm.springbootpbm.entity.Record;
+import com.pbm.springbootpbm.repository.PatientEntryRepository;
+import com.pbm.springbootpbm.repository.PharmacyInfoRepository;
 import com.pbm.springbootpbm.service.PMBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +16,34 @@ import java.util.List;
 public class PBMController {
     @Autowired
     private PMBService service;
+    @Autowired
+    private PharmacyInfoRepository pharmacyInfoRepository;
+
+    // Pharmacy Info Details
+    //@GetMapping("/getPRRR")
+    //public List<RecordWithPharmacyDTO> getRecordWithPharmacy(){ return pharmacyInfoRepository.getRecordWithPharmacy(); }
+    @GetMapping("/getPRr/{did}/{city}")
+    public List<PharmacyInfo> getPharmacyInfo(@PathVariable int did,@PathVariable String city){ return pharmacyInfoRepository.getPharmacyInfo(did,city); }
 
     // Patient Details
+    @GetMapping("/addPP/{name}/{city}/{pass}/{inid}")
+    public String insert(@PathVariable String name, @PathVariable String city, @PathVariable int pass, @PathVariable int inid){
+        return service.insertPatient(name,city,pass,inid);
+    }
     @PostMapping("/addP")
     public Patient addPatient(@RequestBody Patient patient){ return service.savePatient(patient); }
+    @GetMapping("/getP")
+    public List<Patient> getPatientList(){ return service.getPatientList(); }
+    @GetMapping("/getPlogin/{name}/{pass}")
+    public String getLoginStatus(@PathVariable String name, @PathVariable int pass){ return service.getLoginStatus(name,pass); }
 
     // Record Details
+    @PostMapping("/addR")
+    public List<Record> addRecords(@RequestBody List<Record> records){ return service.addRecords(records); }
     @GetMapping("/updateRS")
     public String updateRecordStatus(@RequestBody int id){ return service.updateRecordStatus(id); }
+    @GetMapping("/getRPending")
+    public List<Record> getPendingRecord(){ return service.getPendingRecord(); }
 
     // Drug Details
     @PostMapping("/addD")
@@ -30,6 +54,8 @@ public class PBMController {
     public String deleteDrug(@PathVariable int id){
         return service.deleteDrug(id);
     }
+    @GetMapping("/getDPS/{dname}")
+    public String getDrugnameStatus(@PathVariable String dname){ return service.getDrugnameStatus(dname); }
 
     // Insurance Details
     @PostMapping("/addI")
