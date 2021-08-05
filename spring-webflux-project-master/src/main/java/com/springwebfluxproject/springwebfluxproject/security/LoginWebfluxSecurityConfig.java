@@ -57,8 +57,8 @@ public class LoginWebfluxSecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange().pathMatchers("/login", "/addP").permitAll()
-//                .pathMatchers(HttpMethod.GET, "/managers-can-see-this-folder/**", "/and-this-page")
-//                .hasRole("MANAGER")
+                .pathMatchers(HttpMethod.GET, "/getD")
+                .hasRole("ADMIN")
 //                .matchers(exchange -> new MediaTypeServerWebExchangeMatcher(MediaType.APPLICATION_PDF).matches(exchange))
 //                .hasRole("ADMIN")
                 .anyExchange().authenticated().and()

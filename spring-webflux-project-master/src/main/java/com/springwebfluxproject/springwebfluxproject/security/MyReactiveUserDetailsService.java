@@ -53,11 +53,11 @@ public class MyReactiveUserDetailsService implements ReactiveUserDetailsService 
             String role=this.getRole();
 
             if ("ROLE_ADMIN".equals(role)) {
-                authorities.add(new SimpleGrantedAuthority("ADMIN"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
             }
             else if("ROLE_USER".equals(role))
-            authorities.add(new SimpleGrantedAuthority("USER"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
             return authorities;
         }
