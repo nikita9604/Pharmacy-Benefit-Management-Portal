@@ -124,4 +124,9 @@ public class PMBService {
     {
         return pharmacyRepository.getAllPharmacyWithDrugNameInACity(dname,city);
     }
+    //Record Repository
+    public Mono<Record> addRecord(Record record){ return recordRepository.save(record); }
+    public Flux<Record> getAllRecordsOfAPatient(String pname){ return patientRepository.findIdGivenName(pname).flatMapMany(pid->recordRepository.getAllRecordsOfAPatient(pid)); }
+
+
 }

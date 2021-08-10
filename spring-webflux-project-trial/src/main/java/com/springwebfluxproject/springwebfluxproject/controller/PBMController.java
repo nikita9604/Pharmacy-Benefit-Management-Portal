@@ -3,6 +3,7 @@ package com.springwebfluxproject.springwebfluxproject.controller;
 
 import com.springwebfluxproject.springwebfluxproject.dto.CreateUserDTO;
 import com.springwebfluxproject.springwebfluxproject.entity.*;
+import com.springwebfluxproject.springwebfluxproject.entity.Record;
 import com.springwebfluxproject.springwebfluxproject.security.User;
 import com.springwebfluxproject.springwebfluxproject.security.UserRepository;
 import com.springwebfluxproject.springwebfluxproject.service.PMBService;
@@ -109,4 +110,17 @@ public class PBMController {
         User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());
         return users.save(userWithEncodedPassword);
     };
+
+    //Record Repository
+    @PostMapping("/addR")
+    public Mono<Record> addPatient(@RequestBody Record record){
+        return service.addRecord(record);
+
+    }
+    @GetMapping("/getR/{pname}")
+    public Flux<Record> getRecordsOfPatient(@PathVariable("pname") String pname)
+    {
+        return service.getAllRecordsOfAPatient(pname);
+    }
+
     }
