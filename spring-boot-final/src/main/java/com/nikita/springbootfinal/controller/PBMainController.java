@@ -8,11 +8,14 @@ import com.nikita.springbootfinal.security.User;
 import com.nikita.springbootfinal.security.UserRepository;
 import com.nikita.springbootfinal.service.PMBService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PBMainController {
@@ -39,14 +42,16 @@ public class PBMainController {
     }
      */
     @PostMapping("/addP")
-    public String addPatient(@RequestBody CreateUserDTO client){
+    public Map<String, String> addPatient(@RequestBody CreateUserDTO client){
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(client.getPassword());
         User userWithEncodedPassword=new User(null,client.getName(),encodedPassword,"ROLE_USER");
         Patient patient=new Patient(null, client.getName(), client.getCity(), client.getInid());
         users.save(userWithEncodedPassword);
         service.savePatient(patient);
-        return "User Registered Successfully";
+        Map<String, String> rtn = new LinkedHashMap<>();
+        rtn.put("response","User Registered Successfully");
+        return rtn;
     }
     @PostMapping("/addPp")
     public Patient addPatient(@RequestBody Patient patient){ return service.savePatient(patient); }
@@ -132,7 +137,7 @@ public class PBMainController {
     public User addPharmacies(@RequestBody User user){
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
-        User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());
+        User userWithEncodedPassword=new User(null,user.getUsername(),encodedPassword,user.getRole());
         return users.save(userWithEncodedPassword);
     }
 }

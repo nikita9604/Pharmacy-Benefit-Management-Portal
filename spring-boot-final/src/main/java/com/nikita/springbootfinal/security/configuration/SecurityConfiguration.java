@@ -1,7 +1,9 @@
 package com.nikita.springbootfinal.security.configuration;
 
 //import com.nikita.springbootfinal.security.CustomUserDetailService;
+import com.nikita.springbootfinal.security.MySimpleUrlAuthenticationSuccessHandler;
 import com.nikita.springbootfinal.security.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    MySimpleUrlAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Building our own http authentication and authorization strategies
@@ -26,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.GET,"/getD").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated().and().httpBasic()
-                .and().formLogin().and().csrf().disable();
+                .and().formLogin().successHandler(myAuthenticationSuccessHandler).and().csrf().disable();
 //                .formLogin().loginPage("/login").defaultSuccessUrl("/",true);
 
         // http.authorizeRequests().anyRequest().permitAll();
