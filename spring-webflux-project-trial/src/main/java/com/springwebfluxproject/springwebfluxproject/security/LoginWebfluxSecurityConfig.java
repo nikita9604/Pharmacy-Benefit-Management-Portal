@@ -37,6 +37,11 @@ public class LoginWebfluxSecurityConfig {
     {
         return new MyReactiveUserDetailsService();
     }
+    @Bean
+    public MySimpleUrlAuthenticationSuccessHandler myAuthenticationSuccessHandler()
+    {
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -63,7 +68,7 @@ public class LoginWebfluxSecurityConfig {
 //                .hasRole("ADMIN")
                 .anyExchange().authenticated().and()
                 .httpBasic().and()
-                .formLogin().and()
+                .formLogin().authenticationSuccessHandler(myAuthenticationSuccessHandler()).and()
 //                .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .csrf().disable();
 

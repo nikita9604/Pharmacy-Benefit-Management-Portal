@@ -34,7 +34,7 @@ public class PMBService {
     // Patient Repository
     // Add details in Patient sign up page - button
     public Mono<Patient> savePatient(Patient patient){ return patientRepository.save(patient); }
-
+    public Flux<Patient> getPatientList(){ return patientRepository.findAll(); }
     // Record Repository
     // Update status from pending to confirmed
     public Mono<String> updateRecordStatus(int id){

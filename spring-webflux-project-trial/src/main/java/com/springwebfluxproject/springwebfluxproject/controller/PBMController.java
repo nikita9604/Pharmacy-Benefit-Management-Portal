@@ -40,7 +40,8 @@ public class PBMController {
         return users.save(userWithEncodedPassword).zipWith(service.savePatient(patient),(newUser,newPatient)->newPatient);
 
     }
-
+    @GetMapping("/getP")
+    public Flux<Patient> getPatientList(){ return service.getPatientList(); }
     // Record Details
     @GetMapping("/updateRS")
     public Mono<String> updateRecordStatus(@RequestBody int id){ return service.updateRecordStatus(id); }
