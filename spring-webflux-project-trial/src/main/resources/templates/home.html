@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<body style="background:url('https://img.freepik.com/free-photo/blur-hospital_1203-7957.jpg?size=626&ext=jpg') no-repeat; background-size:cover;">
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+<center>
+
+
+
+
+    <div class="row" style="margin-top: 100px;">
+        <div class="col-md-4">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <img class="card-img-top" src="https://thumbs.dreamstime.com/b/medical-background-8377560.jpg"
+                     alt="Card image cap">
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <h4 class="card-title"><a>Login as Admin</a></h4>
+
+                    <!-- Button -->
+                    <a th:href="@{/login}" class="btn btn-primary">Login</a>
+
+                </div>
+
+            </div>
+            <!-- Card -->
+        </div>
+        <div class="col-md-4">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <img class="card-img-top" src="https://thumbs.dreamstime.com/b/medical-background-8377560.jpg"
+                     alt="Card image cap">
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <h4 class="card-title"><a>Login as User</a></h4>
+
+                    <!-- Button -->
+                    <a th:href="@{/login}" class="btn btn-primary">Login</a>
+
+                </div>
+
+            </div>
+            <!-- Card -->
+        </div>
+        <div class="col-md-4">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <img class="card-img-top" src="https://thumbs.dreamstime.com/b/medical-background-8377560.jpg"
+                     alt="Card image cap">
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <h4 class="card-title"><a>Register</a></h4>
+
+                    <!-- Button -->
+                    <a th:href="@{/register}" class="btn btn-primary">Register</a>
+
+                </div>
+
+            </div>
+            <!-- Card -->
+        </div>
+    </div>
+</center>
+</body>
+
+</html>
