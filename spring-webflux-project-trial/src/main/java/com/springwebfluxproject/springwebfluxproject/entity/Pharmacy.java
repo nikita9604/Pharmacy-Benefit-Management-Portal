@@ -16,5 +16,5 @@ public class Pharmacy {
     private Integer phid;
     private String phname;
     private String city;
-
+    // First record would have phid=1, phname="unknown", city="unknown";
 }
