@@ -56,7 +56,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements ServerAuthentica
     protected String determineTargetUrl(final Authentication authentication) {
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put("ROLE_USER", "/getP");
+        roleTargetUrlMap.put("ROLE_USER", "/all");
         roleTargetUrlMap.put("ROLE_ADMIN", "/getD");
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

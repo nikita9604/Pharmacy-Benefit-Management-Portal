@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:drug="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
   <!-- Font Awesome -->
@@ -60,13 +60,9 @@
     </ul>
     <span class="navbar-text white-text">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link mr-3" href="#"><i class="fas fa-cart-plus fa-2x"></i>
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
+
                     <li class="nav-item ml-3 mr-3">
-                        <a class="nav-link" th:href="@{/home}">Logout</a>
+                        <a class="nav-link" href="home.html">Logout</a>
                     </li>
                 </ul>
             </span>
@@ -83,27 +79,53 @@
 <table class="table mt-5">
   <thead class="black white-text">
   <tr>
-    <th scope="col">Serial No.</th>
-    <th scope="col">Drug Name</th>
-    <th scope="col">Drug Price</th>
-    <th scope="col">Request</th>
+    <th scope="col">Drug ID </th>
+    <th scope="col">Patient ID</th>
+    <th scope="col">Patient Name</th>
+    <th scope="col">Pharmacy  Name</th>
+    <th scope="col">City</th>
+    <th scope="col">Approve</th>
 
 
 
   </tr>
   </thead>
   <tbody>
-  <tr data-th-each="drug: ${drugs}" >
-    <td>[[${drug.did}]]</span></td>
-    <td>[[${drug.dname}]]</span></td>
-    <td>[[${drug.price}]]</span></td>
-    <td><button type="button" class="btn btn-success">Request</button></td>
+  <tr>
+
+    <td>Mark</td>
+    <td>Otto</td>
+    <td>NA</td>
+    <td>NA</td>
+    <td>NA</td>
+
+    <td><button type="button" class="btn btn-success">Approve</button></td>
 
 
   </tr>
+  <tr>
+
+    <td>Mark</td>
+    <td>Otto</td>
+    <td>NA</td>
+    <td>NA</td>
+    <td>NA</td>
+
+    <td><button type="button" class="btn btn-success">Approve</button></td>
 
 
+  </tr>
+  <tr>
 
+    <td>Mark</td>
+    <td>Otto</td>
+    <td>NA</td>
+    <td>NA</td>
+    <td>NA</td>
+
+    <td><button type="button" class="btn btn-success">Approve</button></td>
+
+  </tr>
   </tbody>
 </table>
 
