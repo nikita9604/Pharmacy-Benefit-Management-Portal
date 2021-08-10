@@ -97,7 +97,7 @@ public class PBMController {
 
     //User Repository
     @PostMapping("/addUser")
-    public Mono<User> addPharmacies(@RequestBody User user){
+    public Mono<User> addUsers(@RequestBody User user){
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
         User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());

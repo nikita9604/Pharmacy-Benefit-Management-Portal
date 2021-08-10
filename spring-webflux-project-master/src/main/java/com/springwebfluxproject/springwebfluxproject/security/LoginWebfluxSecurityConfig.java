@@ -14,6 +14,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.*;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 import org.springframework.security.web.server.util.matcher.MediaTypeServerWebExchangeMatcher;
 
 import java.util.HashMap;
@@ -55,8 +56,7 @@ public class LoginWebfluxSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http
-                .authorizeExchange().pathMatchers("/login", "/addP").permitAll()
+        http.authorizeExchange().pathMatchers("/login", "/addP").permitAll()
                 .pathMatchers(HttpMethod.GET, "/getD")
                 .hasRole("ADMIN")
 //                .matchers(exchange -> new MediaTypeServerWebExchangeMatcher(MediaType.APPLICATION_PDF).matches(exchange))
@@ -64,15 +64,10 @@ public class LoginWebfluxSecurityConfig {
                 .anyExchange().authenticated().and()
                 .httpBasic().and()
                 .formLogin().and()
+//                .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
                 .csrf().disable();
 
-//        http.authorizeExchange().pathMatchers(HttpMethod.DELETE).denyAll()
-//               .pathMatchers("/login", "/logout").permitAll()
-//                .pathMatchers(HttpMethod.GET, "/managers-can-see-this-folder/**", "/and-this-page")
-//                .hasRole("MANAGER")
-//                .matchers(exchange -> new MediaTypeServerWebExchangeMatcher(MediaType.APPLICATION_PDF).matches(exchange))
-//                .hasRole("ADMIN")
-//                .anyExchange().authenticated()
+
         return http.build();
     }
 }

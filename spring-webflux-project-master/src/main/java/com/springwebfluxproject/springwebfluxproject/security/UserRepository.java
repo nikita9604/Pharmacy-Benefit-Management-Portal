@@ -8,3 +8,4 @@ import java.util.Optional;
 public interface UserRepository extends ReactiveCrudRepository<User,Integer> {
     Mono<User> findByUsername(String username);
 }
+
