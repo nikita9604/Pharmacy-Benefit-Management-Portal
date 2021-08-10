@@ -140,4 +140,12 @@ public class PBMainController {
         User userWithEncodedPassword=new User(null,user.getUsername(),encodedPassword,user.getRole());
         return users.save(userWithEncodedPassword);
     }
+    @PostMapping("/addAdmin")
+    public User addAdmin(@RequestBody User user){
+        PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        String encodedPassword = encoder.encode(user.getPassword());
+        //User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());
+        User userWithEncodedPassword=new User(null,user.getUsername(),encodedPassword,"ROLE_ADMIN");
+        return users.save(userWithEncodedPassword);
+    }
 }
