@@ -44,14 +44,16 @@ public class AppController {
     }
 
     @PostMapping("/register")
-    public Mono<Patient> addPatient(@ModelAttribute CreateUserDTO client,Model model){
-
+    public Mono<String> addPatient(@ModelAttribute CreateUserDTO client,Model model){
+        log.info("Client=",client.toString());
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(client.getPassword());
         User userWithEncodedPassword=new User(null,client.getName(),encodedPassword,"ROLE_USER");
 
         Patient patient=new Patient(null, client.getName(), client.getCity(), client.getInid());
-        return users.save(userWithEncodedPassword).zipWith(service.savePatient(patient),(newUser,newPatient)->newPatient);
+       return users.save(userWithEncodedPassword).zipWith(service.savePatient(patient),(newUser,newPatient)->newPatient).then(Mono.just("home"));
+//        model.addAttribute("client",new CreateUserDTO());
+
 
     }
 }

@@ -31,7 +31,7 @@ public class PBMController {
     // Patient Details
     @PostMapping("/addP")
     public Mono<Patient> addPatient(@RequestBody CreateUserDTO client){
-        log.info("Client=",client);
+
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(client.getPassword());
         User userWithEncodedPassword=new User(null,client.getName(),encodedPassword,"ROLE_USER");
