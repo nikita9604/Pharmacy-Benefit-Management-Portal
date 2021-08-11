@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th=""www.thymeleaf.org>
 
 <head>
   <!-- Font Awesome -->
@@ -79,11 +79,9 @@
 <table class="table mt-5">
   <thead class="black white-text">
   <tr>
-    <th scope="col">Drug ID </th>
-    <th scope="col">Patient ID</th>
-    <th scope="col">Patient Name</th>
+    <th scope="col">Pharmacy ID</th>
     <th scope="col">Pharmacy  Name</th>
-    <th scope="col">City</th>
+
     <th scope="col">Approve</th>
 
 
@@ -91,41 +89,29 @@
   </tr>
   </thead>
   <tbody>
-  <tr>
+  <tr data-th-each="pharm:${pharmacy}">
 
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>NA</td>
-    <td>NA</td>
-    <td>NA</td>
-
-    <td><button type="button" class="btn btn-success">Approve</button></td>
+    <td>[[${pharm.phid}]]</td>
+    <td>[[${pharm.phname}]]</td>
 
 
-  </tr>
-  <tr>
+    <td>
+    <form method="GET" th:action="@{/updateRec}" >
 
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>NA</td>
-    <td>NA</td>
-    <td>NA</td>
+      <input type="hidden" name="rid" id="rid"  th:value="${rid}"/>
+      <input type="hidden" name="phid" id="phid" th:value="${pharm.phid}"/>
 
-    <td><button type="button" class="btn btn-success">Approve</button></td>
+      <button type="submit" class="btn btn-success" name="submit" >Approve</button>
+
+    </form>
+    </td>
 
 
   </tr>
-  <tr>
 
-    <td>Mark</td>
-    <td>Otto</td>
-    <td>NA</td>
-    <td>NA</td>
-    <td>NA</td>
 
-    <td><button type="button" class="btn btn-success">Approve</button></td>
 
-  </tr>
+
   </tbody>
 </table>
 

@@ -139,4 +139,11 @@ public class PBMController {
         return service.getAllRecordsOfAPatient(pname);
     }
 
+    /*@GetMapping("/getPharmacy")
+    public Flux<Pharmacy> getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
+
+        return service.getNearbyPharmacies(dname,city);
+
+    }*/
+
     }

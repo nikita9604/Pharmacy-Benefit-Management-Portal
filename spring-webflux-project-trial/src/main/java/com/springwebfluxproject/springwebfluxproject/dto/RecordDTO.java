@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecordDTO {
+    private int rid;
     private int pid;
     private int did;
     private String docname;
     private String city;
     private String pname;
     private String dname;
+
 }

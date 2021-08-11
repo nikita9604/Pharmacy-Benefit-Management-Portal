@@ -23,7 +23,7 @@ public class PharmacyRepositoryExtendedImpl implements PharmacyRepositoryExtende
     public Flux<Pharmacy> getAllPharmacyWithDrugNameInACity(String dname,String city)
     {
         String query="select * from pharmacy natural join drug natural join pharmacydrug where dname=:dname and city=:city";
-        Flux<Pharmacy> result = client.sql(query).bind("dname", dname).bind("city",city.toUpperCase()).map(row -> new Pharmacy(row.get("phid", Integer.class),
+        Flux<Pharmacy> result = client.sql(query).bind("dname", dname).bind("city",city).map(row -> new Pharmacy(row.get("phid", Integer.class),
                 row.get("phname", String.class),row.get("city",String.class))).all();
         return result;
     }

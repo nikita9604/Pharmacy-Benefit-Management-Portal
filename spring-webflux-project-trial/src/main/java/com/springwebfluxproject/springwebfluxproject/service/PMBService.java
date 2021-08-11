@@ -133,6 +133,7 @@ public class PMBService {
     {
         return recordRepository.getAllApprovedRecords();
     }
+    public Flux<Record> updateRRecords(int rid,int phid){ return recordRepository.updateRecords(rid,phid,"order placed");}
 
 
 }

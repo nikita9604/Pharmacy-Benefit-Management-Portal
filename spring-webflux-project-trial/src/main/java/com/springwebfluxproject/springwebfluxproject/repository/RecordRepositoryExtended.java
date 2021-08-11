@@ -6,4 +6,5 @@ import reactor.core.publisher.Flux;
 
 public interface RecordRepositoryExtended {
     public Flux<RecordDTO> getAllApprovedRecords();
+
 }

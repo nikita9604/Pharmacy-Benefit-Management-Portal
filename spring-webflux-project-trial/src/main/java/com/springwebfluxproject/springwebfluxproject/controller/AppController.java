@@ -49,61 +49,56 @@ public class AppController {
 
 
     @GetMapping("/home")
-    public String viewHomePage()
-    {
+    public String viewHomePage() {
         return "home";
     }
 
     @GetMapping("/register")
-    public String viewSignUpPage(Model model)
-
-    {
-        model.addAttribute("client",new CreateUserDTO());
+    public String viewSignUpPage(Model model) {
+        model.addAttribute("client", new CreateUserDTO());
         log.info("rendering form");
         return "signup";
     }
 
     @PostMapping("/register")
-    public Mono<String> addPatient(@ModelAttribute CreateUserDTO client,Model model){
-        log.info("Client=",client.toString());
-        PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public Mono<String> addPatient(@ModelAttribute CreateUserDTO client, Model model) {
+        log.info("Client=", client.toString());
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(client.getPassword());
-        User userWithEncodedPassword=new User(null,client.getName(),encodedPassword,"ROLE_USER");
+        User userWithEncodedPassword = new User(null, client.getName(), encodedPassword, "ROLE_USER");
 
-        Patient patient=new Patient(null, client.getName(), client.getCity(), client.getInid());
-        return users.save(userWithEncodedPassword).zipWith(service.savePatient(patient),(newUser,newPatient)->newPatient).then(Mono.just("home"));
+        Patient patient = new Patient(null, client.getName(), client.getCity(), client.getInid());
+        return users.save(userWithEncodedPassword).zipWith(service.savePatient(patient), (newUser, newPatient) -> newPatient).then(Mono.just("home"));
 //        model.addAttribute("client",new CreateUserDTO());
 
 
     }
 
     @GetMapping("/addRecord")
-    public Mono<String> addRecord(@RequestParam("did") String did,@RequestParam("docname") String docname, Model model){
+    public Mono<String> addRecord(@RequestParam("did") String did, @RequestParam("docname") String docname, Model model) {
 
         //log.info("output",did,docname);
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::getPrincipal)
-                .map(principal-> (User) principal)
-                .flatMap(user->patientRepository.getPatientGivenName(user.getUsername()))
+                .map(principal -> (User) principal)
+                .flatMap(user -> patientRepository.getPatientGivenName(user.getUsername()))
                 .zipWith(service.getDoctorPrescription(docname),
-                        (patient,status)->new Record(null,patient.getPid(),Integer.parseInt(did), docname,patient.getCity(),status))
-                .flatMap(record->{
-                    model.addAttribute("status",record.getStatus());
+                        (patient, status) -> new Record(null, patient.getPid(), Integer.parseInt(did), docname, patient.getCity(), status))
+                .flatMap(record -> {
+                    model.addAttribute("status", record.getStatus());
                     return service.addRecord(record);
                 }).then(Mono.just("requestsuccess"));
-
 
 
     }
 
 
     @GetMapping("/all")
-    public String showAll(Model model)
-    {
+    public String showAll(Model model) {
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
                 new ReactiveDataDriverContextVariable(drugRepository.findAll(), 1);
-        model.addAttribute("drugs",reactiveDataDrivenMode);
+        model.addAttribute("drugs", reactiveDataDrivenMode);
 //        model.addAttribute("request",new DrugRequest());
         //log.info();
         return "userdash";
@@ -111,33 +106,57 @@ public class AppController {
 
 
     @GetMapping("/requests")
-    public String showAdminDash(Model model)
-    {
+    public String showAdminDash(Model model) {
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
                 new ReactiveDataDriverContextVariable(service.getAllApprovedRecords(), 1);
-        model.addAttribute("records",reactiveDataDrivenMode);
+        model.addAttribute("records", reactiveDataDrivenMode);
 //
         //log.info();
         return "admindash";
     }
 
-//    @GetMapping("/getPharmacy")
-//    public String getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
-//
-//        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-//                new ReactiveDataDriverContextVariable(service.getNearbyPharmacies(dname,city), 1);
-//        model.addAttribute("pharmacy",reactiveDataDrivenMode);
-//        return "approvaldash";
-//    }
-
     @GetMapping("/getPharmacy")
+    public String getPharmacy(@RequestParam("dname") String dname, @RequestParam("city") String city, @RequestParam("rid") String rid, Model model) {
+
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                new ReactiveDataDriverContextVariable(service.getNearbyPharmacies(dname, city), 1);
+        model.addAttribute("pharmacy", reactiveDataDrivenMode);
+        model.addAttribute("rid", Integer.parseInt(rid));
+        return "approvaldash";
+    }
+
+    /*@GetMapping("/getPharmacy")
     @ResponseBody
     public Flux<Pharmacy> getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
 
         return service.getNearbyPharmacies(dname,city);
 
+    }*/
+
+    @GetMapping("/updateRec")
+    public Mono<String> updateRecord(@RequestParam("rid") String rid, @RequestParam("phid") String phid, Model model) {
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                new ReactiveDataDriverContextVariable(service.getAllApprovedRecords(), 1);
+        model.addAttribute("records", reactiveDataDrivenMode);
+        return service.updateRRecords(Integer.parseInt(rid), Integer.parseInt(phid)).then(Mono.just("admindash"));
+
     }
 
+    @GetMapping("/userRec")
+    public Mono<String> userRecord(Model model) {
+
+        //log.info("output",did,docname);
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getPrincipal)
+                .map(principal -> (User) principal)
+                .flatMap(user -> {
+                    IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                            new ReactiveDataDriverContextVariable(service.getAllRecordsOfAPatient(user.getUsername()), 1);
+                    model.addAttribute("records", reactiveDataDrivenMode);
+                    return Mono.just("recorddash");
+                });
 
 
     }
+}
