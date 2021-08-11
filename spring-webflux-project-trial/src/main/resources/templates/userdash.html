@@ -86,6 +86,7 @@
     <th scope="col">Serial No.</th>
     <th scope="col">Drug Name</th>
     <th scope="col">Drug Price</th>
+      <th scope="col">Doctor Name</th>
     <th scope="col">Request</th>
 
 
@@ -97,7 +98,24 @@
     <td>[[${drug.did}]]</span></td>
     <td>[[${drug.dname}]]</span></td>
     <td>[[${drug.price}]]</span></td>
-    <td><button type="button" class="btn btn-success">Request</button></td>
+
+          <form method="GET" th:action="@{/addRecord}" >
+              <td style="width: 250px" ><div class="form-group">
+                  <input type="text" class="form-control" id="docname" name="docname"  required/>
+              </div>
+
+              </td>
+            <td>
+              <input type="hidden" name="did" id="did"  th:value="${drug.did}"/>
+
+<!--              <input type="hidden" name="docname" id="docname" th:value="Dr.Rahul"/>-->
+
+
+              <button type="submit" class="btn btn-success" name="submit" value="Request" >Request</button>
+            </td>
+          </form>
+      </td>
+<!--      <td><button type="button" class="btn btn-success">Request</button></td>-->
 
 
   </tr>

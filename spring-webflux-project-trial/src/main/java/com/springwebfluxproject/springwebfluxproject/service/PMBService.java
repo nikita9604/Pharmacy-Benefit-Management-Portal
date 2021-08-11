@@ -106,9 +106,9 @@ public class PMBService {
     public Mono<String> getDoctorPrescription(String docname){
         return doctorRepository.hasDocname(docname).flatMap(check->{
             if (check == true)
-                return Mono.just("Prescription Request Accepted");
+                return Mono.just("Accepted");
             else
-                return Mono.just("Prescription Request Failed");
+                return Mono.just("Denied");
 
         });
 

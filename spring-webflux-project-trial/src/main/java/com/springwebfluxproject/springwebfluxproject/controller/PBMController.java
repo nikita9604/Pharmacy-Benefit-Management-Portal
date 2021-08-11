@@ -9,10 +9,14 @@ import com.springwebfluxproject.springwebfluxproject.security.UserRepository;
 import com.springwebfluxproject.springwebfluxproject.service.PMBService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -111,6 +115,13 @@ public class PBMController {
         return users.save(userWithEncodedPassword);
     };
 
+    @GetMapping("/current-user")
+    public Mono<User> getCurrentUser(ServerWebExchange exchange) {
+        return ReactiveSecurityContextHolder.getContext()
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getPrincipal)
+                .map(principal-> (User) principal);
+    }
     //Record Repository
     @PostMapping("/addR")
     public Mono<Record> addPatient(@RequestBody Record record){

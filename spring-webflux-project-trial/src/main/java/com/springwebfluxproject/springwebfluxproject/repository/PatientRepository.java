@@ -10,4 +10,7 @@ import reactor.core.publisher.Mono;
 public interface PatientRepository extends ReactiveCrudRepository<Patient,Integer> {
     @Query("select pid from Patient where name=:pname")
     Mono<Integer> findIdGivenName(String pname);
+
+    @Query("select * from Patient where name=:pname")
+    Mono<Patient> getPatientGivenName(String pname);
 }
