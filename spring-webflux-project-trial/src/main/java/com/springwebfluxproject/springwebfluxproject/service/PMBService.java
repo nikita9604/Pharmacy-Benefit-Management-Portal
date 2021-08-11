@@ -107,7 +107,7 @@ public class PMBService {
     public Mono<String> getDoctorPrescription(String docname){
         return doctorRepository.hasDocname(docname).flatMap(check->{
             if (check == true)
-                return Mono.just("Accepted");
+                return Mono.just("Prescription Confirmed");
             else
                 return Mono.just("Denied");
 
@@ -133,7 +133,7 @@ public class PMBService {
     {
         return recordRepository.getAllApprovedRecords();
     }
-    public Flux<Record> updateRRecords(int rid,int phid){ return recordRepository.updateRecords(rid,phid,"order placed");}
+    public Flux<Record> updateRRecords(int rid,int phid){ return recordRepository.updateRecords(rid,phid,"Approved");}
 
 
 }

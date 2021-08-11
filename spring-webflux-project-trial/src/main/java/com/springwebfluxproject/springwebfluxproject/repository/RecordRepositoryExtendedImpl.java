@@ -14,7 +14,7 @@ public class RecordRepositoryExtendedImpl implements RecordRepositoryExtended{
     }
     public Flux<RecordDTO> getAllApprovedRecords(){
         String query="select * from record natural join drug natural join patient where status=:status";
-        String status="Denied";
+        String status="Prescription Confirmed";
         Flux<RecordDTO> result = client.sql(query).bind("status", status)
                 .map(row -> new RecordDTO(row.get("rid",Integer.class),row.get("pid", Integer.class),row.get("did", Integer.class),
                 row.get("docname", String.class),row.get("city",String.class),row.get("name", String.class),row.get("dname", String.class))).all();

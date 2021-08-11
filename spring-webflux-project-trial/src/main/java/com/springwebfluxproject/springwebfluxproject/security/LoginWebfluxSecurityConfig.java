@@ -61,8 +61,8 @@ public class LoginWebfluxSecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
-        http.authorizeExchange().pathMatchers("/login", "/addP","/home","/register").permitAll()
-                .pathMatchers(HttpMethod.GET, "/getD")
+        http.authorizeExchange().pathMatchers("/login", "/all","/home","/register","/userRec").permitAll()
+                .pathMatchers(HttpMethod.GET, "/requests","/home","/login","updateRec","/getPharmacy")
                 .hasRole("ADMIN")
 //                .matchers(exchange -> new MediaTypeServerWebExchangeMatcher(MediaType.APPLICATION_PDF).matches(exchange))
 //                .hasRole("ADMIN")
