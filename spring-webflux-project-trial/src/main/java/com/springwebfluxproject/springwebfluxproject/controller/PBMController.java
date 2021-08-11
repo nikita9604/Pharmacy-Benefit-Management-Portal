@@ -2,6 +2,7 @@ package com.springwebfluxproject.springwebfluxproject.controller;
 
 
 import com.springwebfluxproject.springwebfluxproject.dto.CreateUserDTO;
+import com.springwebfluxproject.springwebfluxproject.dto.RecordDTO;
 import com.springwebfluxproject.springwebfluxproject.entity.*;
 import com.springwebfluxproject.springwebfluxproject.entity.Record;
 import com.springwebfluxproject.springwebfluxproject.security.User;
@@ -129,7 +130,9 @@ public class PBMController {
 
     }
     @GetMapping("/getR")
-    public Flux<Record> getRecordList(){ return service.getRecordList(); }
+    public Flux<RecordDTO> getRecordList(){ return service.getAllApprovedRecords(); }
+
+
     @GetMapping("/getR/{pname}")
     public Flux<Record> getRecordsOfPatient(@PathVariable("pname") String pname)
     {

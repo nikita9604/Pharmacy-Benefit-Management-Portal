@@ -1,6 +1,7 @@
 package com.springwebfluxproject.springwebfluxproject.service;
 
 
+import com.springwebfluxproject.springwebfluxproject.dto.RecordDTO;
 import com.springwebfluxproject.springwebfluxproject.entity.*;
 import com.springwebfluxproject.springwebfluxproject.entity.Record;
 import com.springwebfluxproject.springwebfluxproject.repository.*;
@@ -128,6 +129,10 @@ public class PMBService {
     public Mono<Record> addRecord(Record record){ return recordRepository.save(record); }
     public Flux<Record> getAllRecordsOfAPatient(String pname){ return patientRepository.findIdGivenName(pname).flatMapMany(pid->recordRepository.getAllRecordsOfAPatient(pid)); }
     public Flux<Record> getRecordList(){ return recordRepository.findAll(); }
+    public Flux<RecordDTO> getAllApprovedRecords()
+    {
+        return recordRepository.getAllApprovedRecords();
+    }
 
 
 }

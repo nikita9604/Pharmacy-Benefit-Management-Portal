@@ -96,12 +96,21 @@
 
         <td>[[${record.did}]]</td>
         <td>[[${record.pid}]]</td>
-        <td></td>
-        <td></td>
+        <td>[[${record.pname}]]</td>
+        <td>[[${record.dname}]]</td>
         <td>[[${record.city}]]</td>
         <td>[[${record.docname}]]</td>
+        <td>
+            <form method="GET" th:action="@{/getPharmacy}" >
 
-        <td> <a th:href="admin2.html" class="btn btn-success">Appoint</a></td>
+                <input type="hidden" name="dname" id="dname"  th:value="${record.dname}"/>
+                <input type="hidden" name="city" id="city" th:value="${record.city}"/>
+                <button type="submit" class="btn btn-success" name="submit" >Appoint</button>
+
+            </form>
+        </td>
+
+<!--        <td> <a th:href="admin2.html" class="btn btn-success">Appoint</a></td>-->
 
 
     </tr>

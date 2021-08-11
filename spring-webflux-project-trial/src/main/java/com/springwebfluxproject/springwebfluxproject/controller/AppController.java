@@ -2,12 +2,9 @@ package com.springwebfluxproject.springwebfluxproject.controller;
 
 import com.springwebfluxproject.springwebfluxproject.dto.CreateUserDTO;
 import com.springwebfluxproject.springwebfluxproject.dto.DrugRequest;
-import com.springwebfluxproject.springwebfluxproject.entity.Doctor;
-import com.springwebfluxproject.springwebfluxproject.entity.Drug;
-import com.springwebfluxproject.springwebfluxproject.entity.Insurance;
-import com.springwebfluxproject.springwebfluxproject.entity.Patient;
-import com.springwebfluxproject.springwebfluxproject.entity.Record;
+import com.springwebfluxproject.springwebfluxproject.entity.*;
 
+import com.springwebfluxproject.springwebfluxproject.entity.Record;
 import com.springwebfluxproject.springwebfluxproject.repository.DrugRepository;
 import com.springwebfluxproject.springwebfluxproject.repository.PatientRepository;
 import com.springwebfluxproject.springwebfluxproject.repository.RecordRepository;
@@ -112,16 +109,29 @@ public class AppController {
         return "userdash";
     }
 
+
     @GetMapping("/requests")
     public String showAdminDash(Model model)
     {
         IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(recordRepository.findAll(), 1);
+                new ReactiveDataDriverContextVariable(service.getAllApprovedRecords(), 1);
         model.addAttribute("records",reactiveDataDrivenMode);
 //
         //log.info();
         return "admindash";
     }
 
+    @GetMapping("/getPharmacy")
+    public String getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
 
-}
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                new ReactiveDataDriverContextVariable(service.getNearbyPharmacies(dname,city), 1);
+        model.addAttribute("pharmacy",reactiveDataDrivenMode);
+        return "approvaldash";
+    }
+
+
+
+
+
+    }

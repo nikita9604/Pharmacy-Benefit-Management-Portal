@@ -81,6 +81,8 @@
     <tr>
         <th scope="col">Drug ID </th>
         <th scope="col">Patient ID</th>
+        <th scope="col">Patient Name</th>
+        <th scope="col">Drug Name</th>
         <th scope="col">City</th>
         <th scope="col">Doctor</th>
         <th scope="col">Appoint</th>
@@ -94,10 +96,21 @@
 
         <td>[[${record.did}]]</td>
         <td>[[${record.pid}]]</td>
+        <td>[[${record.pname}]]</td>
+        <td>[[${record.dname}]]</td>
         <td>[[${record.city}]]</td>
         <td>[[${record.docname}]]</td>
+        <td>
+            <form method="GET" th:action="@{/getPharmacy}" >
 
-        <td> <a th:href="admin2.html" class="btn btn-success">Appoint</a></td>
+                <input type="hidden" name="dname" id="dname"  th:value="${record.dname}"/>
+                <input type="hidden" name="city" id="city" th:value="${record.city}"/>
+                <button type="submit" class="btn btn-success" name="submit" >Appoint</button>
+
+            </form>
+        </td>
+
+<!--        <td> <a th:href="admin2.html" class="btn btn-success">Appoint</a></td>-->
 
 
     </tr>
