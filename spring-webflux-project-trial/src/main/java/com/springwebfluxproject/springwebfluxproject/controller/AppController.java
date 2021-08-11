@@ -121,16 +121,22 @@ public class AppController {
         return "admindash";
     }
 
+//    @GetMapping("/getPharmacy")
+//    public String getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
+//
+//        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+//                new ReactiveDataDriverContextVariable(service.getNearbyPharmacies(dname,city), 1);
+//        model.addAttribute("pharmacy",reactiveDataDrivenMode);
+//        return "approvaldash";
+//    }
+
     @GetMapping("/getPharmacy")
-    public String getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
+    @ResponseBody
+    public Flux<Pharmacy> getPharmacy(@RequestParam("dname") String dname,@RequestParam("city") String city, Model model) {
 
-        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
-                new ReactiveDataDriverContextVariable(service.getNearbyPharmacies(dname,city), 1);
-        model.addAttribute("pharmacy",reactiveDataDrivenMode);
-        return "approvaldash";
+        return service.getNearbyPharmacies(dname,city);
+
     }
-
-
 
 
 
