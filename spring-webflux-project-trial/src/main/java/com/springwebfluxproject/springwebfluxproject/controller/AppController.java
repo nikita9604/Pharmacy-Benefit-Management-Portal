@@ -10,6 +10,7 @@ import com.springwebfluxproject.springwebfluxproject.entity.Record;
 
 import com.springwebfluxproject.springwebfluxproject.repository.DrugRepository;
 import com.springwebfluxproject.springwebfluxproject.repository.PatientRepository;
+import com.springwebfluxproject.springwebfluxproject.repository.RecordRepository;
 import com.springwebfluxproject.springwebfluxproject.security.User;
 import com.springwebfluxproject.springwebfluxproject.security.UserRepository;
 import com.springwebfluxproject.springwebfluxproject.service.PMBService;
@@ -46,6 +47,9 @@ public class AppController {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private RecordRepository recordRepository;
+
 
     @GetMapping("/home")
     public String viewHomePage()
@@ -79,17 +83,19 @@ public class AppController {
     @GetMapping("/addRecord")
     public Mono<String> addRecord(@RequestParam("did") String did,@RequestParam("docname") String docname, Model model){
 
+        //log.info("output",did,docname);
         return ReactiveSecurityContextHolder.getContext()
                 .map(SecurityContext::getAuthentication)
                 .map(Authentication::getPrincipal)
                 .map(principal-> (User) principal)
                 .flatMap(user->patientRepository.getPatientGivenName(user.getUsername()))
                 .zipWith(service.getDoctorPrescription(docname),
-                        (patient,status)->new Record(null,patient.getPid(),Integer.parseInt(did),docname,patient.getCity(),status))
+                        (patient,status)->new Record(null,patient.getPid(),Integer.parseInt(did), docname,patient.getCity(),status))
                 .flatMap(record->{
                     model.addAttribute("status",record.getStatus());
                     return service.addRecord(record);
                 }).then(Mono.just("requestsuccess"));
+
 
 
     }
@@ -106,9 +112,16 @@ public class AppController {
         return "userdash";
     }
 
-    @GetMapping("/confirm")
-    public String showDashboard()
+    @GetMapping("/requests")
+    public String showAdminDash(Model model)
     {
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode =
+                new ReactiveDataDriverContextVariable(recordRepository.findAll(), 1);
+        model.addAttribute("records",reactiveDataDrivenMode);
+//
+        //log.info();
         return "admindash";
     }
+
+
 }

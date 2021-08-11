@@ -7,6 +7,7 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Flux;
 
 public interface RecordRepository extends ReactiveCrudRepository<Record,Integer> {
+
     @Query("Select * from record where pid=:pid")
     Flux<Record> getAllRecordsOfAPatient(int pid);
 }

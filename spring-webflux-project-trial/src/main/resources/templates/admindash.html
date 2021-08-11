@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
     <!-- Font Awesome -->
@@ -83,6 +83,7 @@
         <th scope="col">Patient ID</th>
         <th scope="col">Patient Name</th>
         <th scope="col">Drug Name</th>
+        <th scope="col">City</th>
         <th scope="col">Doctor</th>
         <th scope="col">Appoint</th>
 
@@ -91,43 +92,21 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
+    <tr data-th-each="record: ${records}">
 
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
+        <td>[[${record.did}]]</td>
+        <td>[[${record.pid}]]</td>
+        <td></td>
+        <td></td>
+        <td>[[${record.city}]]</td>
+        <td>[[${record.docname}]]</td>
 
-        <td> <a href="admin2.html" class="btn btn-success">Appoint</a></td>
-
-
-    </tr>
-    <tr>
-
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-
-        <td> <a href="admin2.html" class="btn btn-success">Appoint</a></td>
-
+        <td> <a th:href="admin2.html" class="btn btn-success">Appoint</a></td>
 
 
     </tr>
-    <tr>
-
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-
-        <td> <a href="admin2.html" class="btn btn-success">Appoint</a></td>
 
 
-    </tr>
     </tbody>
 </table>
 

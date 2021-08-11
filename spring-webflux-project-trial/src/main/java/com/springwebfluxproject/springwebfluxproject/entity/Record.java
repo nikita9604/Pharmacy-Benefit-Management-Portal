@@ -23,7 +23,7 @@ public class Record {
     private String status;
     private int phid=0;
 
-    public Record(Integer rid, int pid, int did, String docname, String city, String status) {
+    public Record(Integer rid, int pid, int did,String docname, String city, String status) {
         this.rid = rid;
         this.pid = pid;
         this.did = did;

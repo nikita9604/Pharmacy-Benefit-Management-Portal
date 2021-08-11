@@ -127,6 +127,7 @@ public class PMBService {
     //Record Repository
     public Mono<Record> addRecord(Record record){ return recordRepository.save(record); }
     public Flux<Record> getAllRecordsOfAPatient(String pname){ return patientRepository.findIdGivenName(pname).flatMapMany(pid->recordRepository.getAllRecordsOfAPatient(pid)); }
+    public Flux<Record> getRecordList(){ return recordRepository.findAll(); }
 
 
 }

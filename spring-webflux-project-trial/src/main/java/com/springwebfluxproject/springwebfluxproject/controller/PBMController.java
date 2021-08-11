@@ -111,7 +111,7 @@ public class PBMController {
     public Mono<User> addUsers(@RequestBody User user){
         PasswordEncoder encoder= PasswordEncoderFactories.createDelegatingPasswordEncoder();
         String encodedPassword = encoder.encode(user.getPassword());
-        User userWithEncodedPassword=new User(user.getUid(),user.getUsername(),encodedPassword,user.getRole());
+        User userWithEncodedPassword=new User(null,user.getUsername(),encodedPassword,user.getRole());
         return users.save(userWithEncodedPassword);
     };
 
@@ -128,6 +128,8 @@ public class PBMController {
         return service.addRecord(record);
 
     }
+    @GetMapping("/getR")
+    public Flux<Record> getRecordList(){ return service.getRecordList(); }
     @GetMapping("/getR/{pname}")
     public Flux<Record> getRecordsOfPatient(@PathVariable("pname") String pname)
     {
